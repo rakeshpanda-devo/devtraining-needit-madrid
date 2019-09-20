@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <condition><![CDATA[var answer = false;
+var rightNow = new GlideDateTime().getDayOfWeekLocalTime();
+if(rightNow == 5){
+	answer = true;
+}
+	
+answer;]]></condition>
+        <conditional>true</conditional>
+        <name>overdue_needit_tasks</name>
+        <run_as display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</run_as>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period/>
+        <run_start>2019-09-19 11:06:54</run_start>
+        <run_time>1970-01-01 08:00:00</run_time>
+        <run_type>daily</run_type>
+        <script><![CDATA[var overDueRecs = new GlideRecord("x_58872_needit_needit_task");
+overDueRecs.addActiveQuery("due_date","<=", rightNow);
+overDueRecs.query();
+while(overDueRecs.next()){
+	gs.info(" log overdue records " + overDueRecs.number );
+	gs.eventQueue('x_58872_needit.overdue_needit_records',overDueRecs,overDueRecs.number,gs.getUserName());
+}]]></script>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-09-19 12:58:09</sys_created_on>
+        <sys_id>83159ea0db4000105fd5d1b1ca961975</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>overdue_needit_tasks</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sysauto_script_83159ea0db4000105fd5d1b1ca961975</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-09-20 08:37:59</sys_updated_on>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>
